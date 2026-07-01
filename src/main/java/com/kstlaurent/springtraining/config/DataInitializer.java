@@ -3,8 +3,8 @@ package com.kstlaurent.springtraining.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.kstlaurent.springtraining.model.Task;
-import com.kstlaurent.springtraining.model.UserAccount;
+import com.kstlaurent.springtraining.model.entity.Task;
+import com.kstlaurent.springtraining.model.entity.UserAccount;
 import com.kstlaurent.springtraining.repository.UserAccountRepository;
 
 @Component

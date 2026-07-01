@@ -4,35 +4,53 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kstlaurent.springtraining.exception.ResourceNotFoundException;
-import com.kstlaurent.springtraining.model.UserAccount;
 import com.kstlaurent.springtraining.repository.UserAccountRepository;
+import com.kstlaurent.springtraining.model.dto.UserAccountDTO;
+import com.kstlaurent.springtraining.model.entity.UserAccount;
 
 @Service
 public class UserAccountService {
 
-    private final UserAccountRepository repository;
+    private final UserAccountRepository userRepository;
+
+    //added for week 4 entity to dto mapping; helper method
+    private UserAccountDTO mapToDTO(UserAccount user) {
+    return new UserAccountDTO(
+        user.getId(),
+        user.getUsername(),
+        user.getEmail()
+    );
+}
 
     public UserAccountService(UserAccountRepository repository) {
-        this.repository = repository;
+        this.userRepository = repository;
     }
 
-    public List<UserAccount> findAll() {
-        return repository.findAll();
-    }
+    //updated for week 4 entity to dto mapping
+    public List<UserAccountDTO> findAllDTOs() {
+
+        return userRepository.findAll()
+            .stream()
+            .map(this::mapToDTO)
+            .toList();
+}
 
     public UserAccount findById(Long id) {
-        return repository.findById(id)
+        return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
     }
 
     public UserAccount save(UserAccount user) {
-        return repository.save(user);
+        return userRepository.save(user);
     }
 
     public void deleteById(Long id) {
-        if (!repository.existsById(id)) {
+        if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User not found with id " + id);
         }
-        repository.deleteById(id);
+        userRepository.deleteById(id);
     }
+
+    
+
 }

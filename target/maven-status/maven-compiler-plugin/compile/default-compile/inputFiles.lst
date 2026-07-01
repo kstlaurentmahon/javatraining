@@ -4,8 +4,10 @@
 /Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/controller/UserAccountController.java
 /Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/exception/GlobalExceptionHandler.java
 /Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/exception/ResourceNotFoundException.java
-/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/Task.java
-/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/UserAccount.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/dto/TaskDTO.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/dto/UserAccountDTO.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/entity/Task.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/entity/UserAccount.java
 /Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/repository/TaskRepository.java
 /Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/repository/UserAccountRepository.java
 /Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/service/TaskService.java

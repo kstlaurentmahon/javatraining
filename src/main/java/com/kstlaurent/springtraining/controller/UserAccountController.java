@@ -6,7 +6,8 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.kstlaurent.springtraining.model.UserAccount;
+import com.kstlaurent.springtraining.model.dto.UserAccountDTO;
+import com.kstlaurent.springtraining.model.entity.UserAccount;
 import com.kstlaurent.springtraining.service.UserAccountService;
 
 @RestController
@@ -19,9 +20,10 @@ public class UserAccountController {
         this.userAccountService = userAccountService;
     }
 
+    //updated for week 4 entity to dto mapping, first endpoint mapped yay!
     @GetMapping
-    public List<UserAccount> getAllUsers() {
-        return userAccountService.findAll();
+    public List<UserAccountDTO> getAllUsers() {
+        return userAccountService.findAllDTOs();
     }
 
     @GetMapping("/{id}")

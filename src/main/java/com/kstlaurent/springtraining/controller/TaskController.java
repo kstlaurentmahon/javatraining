@@ -3,7 +3,8 @@ package com.kstlaurent.springtraining.controller;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import com.kstlaurent.springtraining.model.Task;
+import com.kstlaurent.springtraining.model.dto.TaskDTO;
+import com.kstlaurent.springtraining.model.entity.Task;
 import com.kstlaurent.springtraining.service.TaskService;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
-        return taskService.findAll();
-    }
+    public List<TaskDTO> getAllTasks() {
+    return taskService.findAllDTOs();
+}
 
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable Long id) {

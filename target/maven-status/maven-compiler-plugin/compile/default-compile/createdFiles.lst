@@ -1,12 +1,14 @@
 com/kstlaurent/springtraining/config/DataInitializer.class
 com/kstlaurent/springtraining/controller/TaskController.class
+com/kstlaurent/springtraining/model/dto/UserAccountDTO.class
 com/kstlaurent/springtraining/service/TaskService.class
 com/kstlaurent/springtraining/controller/UserAccountController.class
-com/kstlaurent/springtraining/model/UserAccount.class
+com/kstlaurent/springtraining/model/dto/TaskDTO.class
+com/kstlaurent/springtraining/model/entity/Task.class
 com/kstlaurent/springtraining/repository/UserAccountRepository.class
 com/kstlaurent/springtraining/service/UserAccountService.class
 com/kstlaurent/springtraining/SpringTrainingApplication.class
 com/kstlaurent/springtraining/exception/ResourceNotFoundException.class
 com/kstlaurent/springtraining/exception/GlobalExceptionHandler.class
-com/kstlaurent/springtraining/model/Task.class
 com/kstlaurent/springtraining/repository/TaskRepository.class
+com/kstlaurent/springtraining/model/entity/UserAccount.class
