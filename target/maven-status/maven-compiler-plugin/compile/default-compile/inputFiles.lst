@@ -1,0 +1,12 @@
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/SpringTrainingApplication.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/config/DataInitializer.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/controller/TaskController.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/controller/UserAccountController.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/exception/GlobalExceptionHandler.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/exception/ResourceNotFoundException.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/Task.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/model/UserAccount.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/repository/TaskRepository.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/repository/UserAccountRepository.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/service/TaskService.java
+/Users/katie/javatraining/src/main/java/com/kstlaurent/springtraining/service/UserAccountService.java
