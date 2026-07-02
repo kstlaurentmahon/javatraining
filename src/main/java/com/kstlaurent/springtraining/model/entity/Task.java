@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -34,12 +33,12 @@ public class Task {
         this.description = description;
     }
 
-    //getters & setters
+    // getters & setters
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id){
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,7 +61,7 @@ public class Task {
     public UserAccount getOwner() {
         return owner;
     }
-    
+
     public void setOwner(UserAccount owner) {
         this.owner = owner;
     }

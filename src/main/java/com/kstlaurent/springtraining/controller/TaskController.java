@@ -23,8 +23,8 @@ public class TaskController {
 
     @GetMapping
     public List<TaskDTO> getAllTasks() {
-    return taskService.findAllDTOs();
-}
+        return taskService.findAllDTOs();
+    }
 
     @GetMapping("/{id}")
     public TaskDTO getTaskById(@PathVariable Long id) {
@@ -37,7 +37,6 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         taskService.deleteById(id);
@@ -45,11 +44,9 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public TaskDTO updateTask(
-        @PathVariable Long id,
-        @Valid @RequestBody TaskDTO dto) {
+            @PathVariable Long id,
+            @Valid @RequestBody TaskDTO dto) {
 
         return taskService.update(id, dto);
     }
 }
-
-    

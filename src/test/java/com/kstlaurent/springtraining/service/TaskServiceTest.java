@@ -27,22 +27,23 @@ import com.kstlaurent.springtraining.repository.UserAccountRepository;
 @ExtendWith(MockitoExtension.class)
 class TaskServiceTest {
 
-    //mock creates a fake task repo and user repo. returns null by default
+    // mock creates a fake task repo and user repo. returns null by default
     @Mock
     private TaskRepository taskRepository;
 
     @Mock
     private UserAccountRepository userRepository;
 
-    //this is key for the test - creates a REAL TaskService instance and 
+    // this is key for the test - creates a REAL TaskService instance and
     // hands them the user and task mock repos through the constructor
     @InjectMocks
     private TaskService taskService;
 
     private UserAccount owner;
 
-    //want this to run before every test method to give us a fresh owner object every time
-    //keeps tests from leaking into each other
+    // want this to run before every test method to give us a fresh owner object
+    // every time
+    // keeps tests from leaking into each other
     @BeforeEach
     void setUp() {
         owner = new UserAccount("jsmith", "jsmith@example.com");
@@ -51,156 +52,167 @@ class TaskServiceTest {
         owner.setId(1L);
     }
 
-//Tests for create()
-//Test 1: happy path for create()
+    // Tests for create()
+    // Test 1: happy path for create()
     @Test
     void create_withValidOwner_returnsTaskDTOWithOwnerId() {
-    // Arrange: tell the mocks what to return when TaskService calls them
-    when(userRepository.findById(1L)).thenReturn(Optional.of(owner));
-    when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> {
-        Task t = invocation.getArgument(0);
-        t.setId(99L); // simulate the DB assigning an id on insert
-        return t;
-    });
+        // Arrange: tell the mocks what to return when TaskService calls them
+        when(userRepository.findById(1L)).thenReturn(Optional.of(owner));
+        when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> {
+            Task t = invocation.getArgument(0);
+            t.setId(99L); // simulate the DB assigning an id on insert
+            return t;
+        });
 
-    TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
+        TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
 
-    // Act
-    TaskDTO result = taskService.create(input);
+        // Act
+        TaskDTO result = taskService.create(input);
 
-    // Assert
-    assertEquals(99L, result.getId());
-    assertEquals("Write tests", result.getTitle());
-    assertEquals(1L, result.getOwnerId());
-    //note here: this isn't checking a return value, it's checking if the method was actually called
-    verify(taskRepository).save(any(Task.class));
+        // Assert
+        assertEquals(99L, result.getId());
+        assertEquals("Write tests", result.getTitle());
+        assertEquals(1L, result.getOwnerId());
+        // note here: this isn't checking a return value, it's checking if the method
+        // was actually called
+        verify(taskRepository).save(any(Task.class));
     }
 
-//Test 2: not-found path for create()
-//covers the case were userRepository.findById(...) returns Optional.empty()
+    // Test 2: not-found path for create()
+    // covers the case were userRepository.findById(...) returns Optional.empty()
     @Test
-    void create_withNonexistentOwner_throwResourceNotFoundException(){
-    
-    // Arrange: tell the mocks what to return when TaskService calls them
-    //need the opposite of test 1 ie owner doesn't exist
-    when(userRepository.findById(1L)).thenReturn(Optional.empty());
-    TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
+    void create_withNonexistentOwner_throwResourceNotFoundException() {
 
+        // Arrange: tell the mocks what to return when TaskService calls them
+        // need the opposite of test 1 ie owner doesn't exist
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
 
-    // Act + Assert - assertThrows invokes create() AND checks the outcome
-    //whenever you're testing for something that throws, Act + Assert collapse into one line
-    //because there's no meaningful resut to seperate out and check - the throwing is the result
-    assertThrows(ResourceNotFoundException.class,() -> {taskService.create(input);});
-    
-    //directly checks service's control flow
-    verify(taskRepository, never()).save(any(Task.class));
+        // Act + Assert - assertThrows invokes create() AND checks the outcome
+        // whenever you're testing for something that throws, Act + Assert collapse into
+        // one line
+        // because there's no meaningful resut to seperate out and check - the throwing
+        // is the result
+        assertThrows(ResourceNotFoundException.class, () -> {
+            taskService.create(input);
+        });
 
-    }
-
-// Tests for update()
-// Test 3: happy path for update()
-// Task exist and owner exists
-// Title, description, and owner get updated, mapped, and DTO comes back correctly
-// Note: need an existing task object
-    @Test
-    void update_withValidTaskAndOwner_returnsTaskDTOWithOwnerId(){
-        //Arrange
-    when(userRepository.findById(1L)).thenReturn(Optional.of(owner));
-    
-    Task existingTask = new Task("Old title","Old description");
-    existingTask.setId(5L);
-
-    when(taskRepository.findById(5L)).thenReturn(Optional.of(existingTask));
-
-    when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> {
-        Task t = invocation.getArgument(0);
-        return t;
-    });
-
-    TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
-
-    // Act
-    TaskDTO result = taskService.update(5L,input);
-
-    // Assert
-    assertEquals(5L, result.getId());
-    assertEquals("Write tests", result.getTitle());
-    assertEquals(1L, result.getOwnerId());
-    //note here: this isn't checking a return value, it's checking if the method was actually called
-    verify(taskRepository).save(any(Task.class));
+        // directly checks service's control flow
+        verify(taskRepository, never()).save(any(Task.class));
 
     }
 
-// Test 4: task-not-found path for update()
-// Task doesn't exist; taskRepository.findById(id) returns empty
-// SHOULD throw a resource not found exception
+    // Tests for update()
+    // Test 3: happy path for update()
+    // Task exist and owner exists
+    // Title, description, and owner get updated, mapped, and DTO comes back
+    // correctly
+    // Note: need an existing task object
     @Test
-    void update_withNonexistantTask_throwsResourceNotFound(){
-        //oh no our task, it's empty
-        //stub the missing thing as empty
+    void update_withValidTaskAndOwner_returnsTaskDTOWithOwnerId() {
+        // Arrange
+        when(userRepository.findById(1L)).thenReturn(Optional.of(owner));
+
+        Task existingTask = new Task("Old title", "Old description");
+        existingTask.setId(5L);
+
+        when(taskRepository.findById(5L)).thenReturn(Optional.of(existingTask));
+
+        when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> {
+            Task t = invocation.getArgument(0);
+            return t;
+        });
+
+        TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
+
+        // Act
+        TaskDTO result = taskService.update(5L, input);
+
+        // Assert
+        assertEquals(5L, result.getId());
+        assertEquals("Write tests", result.getTitle());
+        assertEquals(1L, result.getOwnerId());
+        // note here: this isn't checking a return value, it's checking if the method
+        // was actually called
+        verify(taskRepository).save(any(Task.class));
+
+    }
+
+    // Test 4: task-not-found path for update()
+    // Task doesn't exist; taskRepository.findById(id) returns empty
+    // SHOULD throw a resource not found exception
+    @Test
+    void update_withNonexistantTask_throwsResourceNotFound() {
+        // oh no our task, it's empty
+        // stub the missing thing as empty
         when(taskRepository.findById(5L)).thenReturn(Optional.empty());
 
-        //scenario: PUT request for a task id that no longer exists
-        TaskDTO input = new TaskDTO(null,"Write tests","Cover update()",1L);
+        // scenario: PUT request for a task id that no longer exists
+        TaskDTO input = new TaskDTO(null, "Write tests", "Cover update()", 1L);
 
-        //expect the throw
-        assertThrows(ResourceNotFoundException.class,() -> {taskService.update(5L,input);});
+        // expect the throw
+        assertThrows(ResourceNotFoundException.class, () -> {
+            taskService.update(5L, input);
+        });
 
-        //verify something didn't happen
+        // verify something didn't happen
         verify(userRepository, never()).findById(any());
 
     }
 
-// Test 5: owner-not-found path for update()
-// task is found but owner doesn't exist
-// SHOULD throw a resource not found exception
+    // Test 5: owner-not-found path for update()
+    // task is found but owner doesn't exist
+    // SHOULD throw a resource not found exception
     @Test
-    void update_withValidTaskAndNonexistantOwner_throwsResourceNotFound(){
-    //stub taskRepo find by id to return a real task
-    Task existingTask = new Task("Old title","Old description");
-    existingTask.setId(5L);
+    void update_withValidTaskAndNonexistantOwner_throwsResourceNotFound() {
+        // stub taskRepo find by id to return a real task
+        Task existingTask = new Task("Old title", "Old description");
+        existingTask.setId(5L);
 
-    when(taskRepository.findById(5L)).thenReturn(Optional.of(existingTask));
+        when(taskRepository.findById(5L)).thenReturn(Optional.of(existingTask));
 
-    TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
-    
-    //stub userRepo find by id to return empty
-    when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        TaskDTO input = new TaskDTO(null, "Write tests", "Cover create()", 1L);
 
-    assertThrows(ResourceNotFoundException.class,() -> {taskService.update(5L,input);});
+        // stub userRepo find by id to return empty
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-    verify(taskRepository, never()).save(any(Task.class));
+        assertThrows(ResourceNotFoundException.class, () -> {
+            taskService.update(5L, input);
+        });
+
+        verify(taskRepository, never()).save(any(Task.class));
 
     }
 
-// Test for deleteById()
-// Test 6: deletebyId() happy path
-// task exists, method gets invoked, no exception
+    // Test for deleteById()
+    // Test 6: deletebyId() happy path
+    // task exists, method gets invoked, no exception
 
     @Test
-    void deleteById_withValidTask_taskDeleted(){
+    void deleteById_withValidTask_taskDeleted() {
 
-        //simulate an existing task by stubbing the boolean
+        // simulate an existing task by stubbing the boolean
         when(taskRepository.existsById(5L)).thenReturn(true);
 
         taskService.deleteById(5L);
 
         verify(taskRepository).deleteById(5L);
 
-
     }
 
-// Test 7: task doesn't exist
-//same shape as create()/update() not-found tests
+    // Test 7: task doesn't exist
+    // same shape as create()/update() not-found tests
 
     @Test
-    void deleteById_withNonexistantTask_throwsResourceNotFound(){
-        //stub existsbyId to return false
+    void deleteById_withNonexistantTask_throwsResourceNotFound() {
+        // stub existsbyId to return false
         when(taskRepository.existsById(5L)).thenReturn(false);
-        //wrap call in assertThrows
-        assertThrows(ResourceNotFoundException.class,() -> { taskService.deleteById(5L);});
-        //verify method never called
-        verify(taskRepository,never()).deleteById(5L);
+        // wrap call in assertThrows
+        assertThrows(ResourceNotFoundException.class, () -> {
+            taskService.deleteById(5L);
+        });
+        // verify method never called
+        verify(taskRepository, never()).deleteById(5L);
     }
 
 }

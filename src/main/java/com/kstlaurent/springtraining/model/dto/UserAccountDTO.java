@@ -10,25 +10,25 @@ import jakarta.validation.constraints.Email;
 public class UserAccountDTO {
 
     private Long id;
-    
+
     @NotBlank(message = "Username is required")
     private String username;
-    
+
     @NotBlank(message = "Email is required")
     @Email(message = "Email must be a valid address")
     private String email;
 
-    public UserAccountDTO(){
+    public UserAccountDTO() {
     }
 
-    public UserAccountDTO(Long id, String username,String email){
+    public UserAccountDTO(Long id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
     }
-    
-//getters
-    public Long getId(){
+
+    // getters
+    public Long getId() {
         return id;
     }
 
@@ -40,7 +40,7 @@ public class UserAccountDTO {
         return email;
     }
 
-//setters
+    // setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -52,6 +52,5 @@ public class UserAccountDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }

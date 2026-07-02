@@ -1,6 +1,7 @@
 package com.kstlaurent.springtraining.config;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.kstlaurent.springtraining.model.entity.Task;
@@ -8,6 +9,7 @@ import com.kstlaurent.springtraining.model.entity.UserAccount;
 import com.kstlaurent.springtraining.repository.UserAccountRepository;
 
 @Component
+@Profile("!test") // this annotation prevents data seeding from working in a test context
 public class DataInitializer implements CommandLineRunner {
 
     private final UserAccountRepository repository;
@@ -18,17 +20,15 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (repository.count()>0) {
+        if (repository.count() > 0) {
             System.out.println("Sample data already present, skipping seed.");
             return;
         }
 
-        UserAccount user =
-                new UserAccount("kstlaurentmahon", "kathryn.st.laurent-mahon@amivero.com");
+        UserAccount user = new UserAccount("kstlaurentmahon", "kathryn.st.laurent-mahon@amivero.com");
 
-        Task task =
-                new Task("Week 3: Persistance in Spring",
-                         "Verify H2 database");
+        Task task = new Task("Week 3: Persistance in Spring",
+                "Verify H2 database");
 
         task.setOwner(user);
         user.getTasks().add(task);

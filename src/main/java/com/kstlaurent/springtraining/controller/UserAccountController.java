@@ -23,7 +23,7 @@ public class UserAccountController {
         this.userAccountService = userAccountService;
     }
 
-    //updated for week 4 entity to dto mapping, first endpoint mapped yay!
+    // updated for week 4 entity to dto mapping, first endpoint mapped yay!
     @GetMapping
     public List<UserAccountDTO> getAllUsers() {
         return userAccountService.findAllDTOs();
@@ -47,9 +47,9 @@ public class UserAccountController {
 
     @PutMapping("/{id}")
     public UserAccountDTO updateUser(
-        @PathVariable Long id,
-        @Valid @RequestBody UserAccountDTO dto) {
+            @PathVariable Long id,
+            @Valid @RequestBody UserAccountDTO dto) {
 
-    return userAccountService.update(id, dto);
-}
+        return userAccountService.update(id, dto);
+    }
 }

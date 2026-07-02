@@ -8,16 +8,16 @@ import jakarta.validation.constraints.NotNull;
 
 public class TaskDTO {
 
-    @NotNull(message = "ownerId is required")
     private Long id;
-    
+
     @NotBlank(message = "Title is required")
     @Size(max = 100, message = "Title must be 100 characters or fewer")
     private String title;
-    
+
     @Size(max = 500, message = "Description must be 500 characters or fewer")
     private String description;
-    
+
+    @NotNull(message = "ownerId is required")
     private Long ownerId;
 
     public TaskDTO() {
@@ -30,7 +30,7 @@ public class TaskDTO {
         this.ownerId = ownerId;
     }
 
-    //getters & setters
+    // getters & setters
     public Long getId() {
         return id;
     }

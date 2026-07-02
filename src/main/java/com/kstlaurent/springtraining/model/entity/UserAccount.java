@@ -21,9 +21,7 @@ public class UserAccount {
     @Email(message = "Email must be a valid address")
     private String email;
 
-    @OneToMany(mappedBy = "owner",
-               cascade = CascadeType.ALL,
-               orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
     public UserAccount() {
@@ -38,7 +36,7 @@ public class UserAccount {
         return id;
     }
 
-    //service won't call this, but needed for testing
+    // service won't call this, but needed for testing
     public void setId(Long id) {
         this.id = id;
     }
