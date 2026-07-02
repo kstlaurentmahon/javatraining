@@ -34,30 +34,35 @@ public class Task {
         this.description = description;
     }
 
+    //getters & setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public UserAccount getOwner() {
-        return owner;
-    }
-    
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public UserAccount getOwner() {
+        return owner;
+    }
+    
     public void setOwner(UserAccount owner) {
         this.owner = owner;
     }

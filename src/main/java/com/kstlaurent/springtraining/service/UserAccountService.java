@@ -33,15 +33,16 @@ public class UserAccountService {
             .stream()
             .map(this::mapToDTO)
             .toList();
-}
+    }
 
     public UserAccount findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
     }
 
-    public UserAccount save(UserAccount user) {
-        return userRepository.save(user);
+    //reuses existing findById()
+    public UserAccountDTO findDTOById(Long id){
+        return mapToDTO(findById(id));
     }
 
     public void deleteById(Long id) {
@@ -50,6 +51,41 @@ public class UserAccountService {
         }
         userRepository.deleteById(id);
     }
+    //updated for week 4
+    public UserAccountDTO update(Long id, UserAccountDTO dto) {
+        
+        UserAccount user = userRepository.findById(id)
+        .orElseThrow(() ->
+            new ResourceNotFoundException("User not found with id " + id));
+
+    user.setUsername(dto.getUsername());
+    user.setEmail(dto.getEmail());
+
+    UserAccount saved = userRepository.save(user);
+
+    return mapToDTO(saved);
+    }
+
+    //replace this in the controller with the create method, but keep it around for internal use
+    public UserAccount save(UserAccount user) {
+        return userRepository.save(user);
+    }
+
+    //like the update method but instead of fetching an existing user by id, 
+    // construct a new one
+    public UserAccountDTO create(UserAccountDTO dto){
+        UserAccount user = new UserAccount(dto.getUsername(),dto.getEmail());
+
+        UserAccount saved = userRepository.save(user);
+        return mapToDTO(saved);
+
+    }
+
+
+
+
+
+
 
     
 

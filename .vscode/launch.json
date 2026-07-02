@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringTrainingApplication<spring-training>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.kstlaurent.springtraining.SpringTrainingApplication",
+            "projectName": "spring-training",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

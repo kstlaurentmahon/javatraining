@@ -38,6 +38,11 @@ public class UserAccount {
         return id;
     }
 
+    //service won't call this, but needed for testing
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }

@@ -1,5 +1,8 @@
 package com.kstlaurent.springtraining.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+
 //week 4 requirement - custom DTOs handling clean JSON payloads without leaking raw entities
 //DTOs (Data Transfer Object) - translation layer between database and API
 //Think: "what does the user get to see vs what we actually store?"
@@ -7,7 +10,12 @@ package com.kstlaurent.springtraining.model.dto;
 public class UserAccountDTO {
 
     private Long id;
+    
+    @NotBlank(message = "Username is required")
     private String username;
+    
+    @NotBlank(message = "Email is required")
+    @Email(message = "Email must be a valid address")
     private String email;
 
     public UserAccountDTO(){
